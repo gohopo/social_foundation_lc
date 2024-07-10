@@ -96,7 +96,7 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
   }
   void protectedOnMessageReceived(TConversation conversation,TMessage message){
     if(!message.transient) saveConversation(conversation,fromReceived:true);
-    onMessageRecalled(message);
+    onMessageReceived(message);
   }
   Future<Message> protectedSend(Conversation conversation,Message message,bool transient) => conversation.send(message:message,transient:transient);
   @override
