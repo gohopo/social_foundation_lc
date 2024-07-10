@@ -28,7 +28,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.gohopo.social_foundation_Lc
+        package: com.gohopo.social_foundation_lc
         pluginClass: SocialFoundationLcPlugin
       ios:
         pluginClass: SocialFoundationLcPlugin
