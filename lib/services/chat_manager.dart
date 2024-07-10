@@ -9,11 +9,6 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
   @override
   Future close() => _client.close();
   @override
-  Future<TConversation> getConversation(String conversationId) async {
-    var conversation = await protectedGetConversation(conversationId);
-    return protectedConvertConversation(conversation);
-  }
-  @override
   Future<TConversation> convJoin(String conversationId) async {
     var conversation = await protectedGetConversation(conversationId);
     await conversation.join();
@@ -33,6 +28,11 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
   Future convRecall(String messageID,{String? conversationId,int? timestamp}) async {
     var conversation = await protectedGetConversation(conversationId!);
     return conversation.recallMessage(messageID:messageID,messageTimestamp:timestamp);
+  }
+  @override
+  Future<TConversation> getConversation(String conversationId) async {
+    var conversation = await protectedGetConversation(conversationId);
+    return protectedConvertConversation(conversation);
   }
   @override
   Future login(String userId,{String? token}){
@@ -138,7 +138,6 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
       }
       conversation = conv..copyWith(conversation);
     }
-    conversation.save();
-    SfLocatorManager.chatState.updateConversation(conversation);
+    super.saveConversation(conversation,fromReceived:fromReceived,unreadMessageCountUpdated:unreadMessageCountUpdated);
   }
 }
