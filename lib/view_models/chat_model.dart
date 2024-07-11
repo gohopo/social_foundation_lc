@@ -25,7 +25,6 @@ abstract class SfChatModelLc<TConversation extends SfConversation,TMessage exten
       notifyListeners();
       
       await SfMessage.insertAll(messages);
-      convRead();
     }
   }
 }
