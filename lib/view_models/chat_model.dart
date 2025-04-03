@@ -4,11 +4,11 @@ import 'package:social_foundation_lc/services/chat_manager.dart';
 abstract class SfChatModelLc<TConversation extends SfConversation,TMessage extends SfMessage> extends SfChatModel<TConversation,TMessage>{
   SfChatModelLc(super.args);
   @override
-  void listenMessageEvent() async {
+  Future listenMessageEvent() async {
     disposeMessageEvent();
     if(conversation==null) return;
     await queryUnreadMessages();
-    super.listenMessageEvent();
+    return super.listenMessageEvent();
   }
   @override
   void onClientResuming() async {
@@ -18,7 +18,7 @@ abstract class SfChatModelLc<TConversation extends SfConversation,TMessage exten
   Future queryUnreadMessages() async {
     if(conversation!.unreadMessagesCount>0){
       List<TMessage> messages = await (SfLocatorManager.chatManager as SfChatManagerLc).queryMessages(conversation!.convId, conversation!.unreadMessagesCount) as List<TMessage>;
-      onUnreadMessages(messages);
+      await onUnreadMessages(messages);
       messages = messages.where((message) => list.every((data) => !message.equalTo(data))).toList();
       list.insertAll(0,messages);
       list.sort((a,b) => b.timestamp-a.timestamp);
