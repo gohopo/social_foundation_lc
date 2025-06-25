@@ -26,4 +26,7 @@ abstract class SocialFoundationLcPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+  Future<void> registerPush(String oppoAppKey,String oppoAppSecret,String miAppId,String miAppKey) {
+    throw UnimplementedError('registerPush() has not been implemented.');
+  }
 }

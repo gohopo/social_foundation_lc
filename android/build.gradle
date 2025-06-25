@@ -5,10 +5,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://developer.hihonor.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.hihonor.mcs:asplugin:2.0.0'
     }
 }
 
@@ -16,13 +19,15 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://developer.hihonor.com/repo/' }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -32,4 +37,11 @@ android {
     defaultConfig {
         minSdkVersion 16
     }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    implementation 'com.hihonor.mcs:push:7.0.41.301'
+    implementation 'com.huawei.hms:push:6.12.0.300'
+    implementation 'cn.leancloud:realtime-android:7.2.6'
 }

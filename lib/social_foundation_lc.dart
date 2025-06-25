@@ -11,4 +11,5 @@ class SocialFoundationLc {
   Future<String?> getPlatformVersion() {
     return SocialFoundationLcPlatform.instance.getPlatformVersion();
   }
+  static Future registerPush(String oppoAppKey,String oppoAppSecret,String miAppId,String miAppKey) => SocialFoundationLcPlatform.instance.registerPush(oppoAppKey,oppoAppSecret,miAppId,miAppKey);
 }

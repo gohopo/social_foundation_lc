@@ -12,4 +12,11 @@ class MethodChannelSocialFoundationLc extends SocialFoundationLcPlatform {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
+  @override
+  Future<void> registerPush(String oppoAppKey,String oppoAppSecret,String miAppId,String miAppKey){
+    return methodChannel.invokeMethod('registerPush',{
+      "oppoAppKey":oppoAppKey,"oppoAppSecret":oppoAppSecret,
+      "miAppId":miAppId,"miAppKey":miAppKey
+    });
+  }
 }
