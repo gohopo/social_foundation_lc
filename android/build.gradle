@@ -7,6 +7,9 @@ buildscript {
         mavenCentral()
         maven { url 'https://developer.hihonor.com/repo/' }
         maven { url 'https://developer.huawei.com/repo/' }
+        flatDir {
+            dirs project(':social_foundation_lc').file('libs')
+        }
     }
 
     dependencies {
@@ -40,7 +43,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation 'com.hihonor.mcs:push:7.0.41.301'
     implementation 'com.huawei.hms:push:6.12.0.300'
     implementation 'cn.leancloud:realtime-android:7.2.6'
