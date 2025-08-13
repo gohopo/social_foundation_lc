@@ -89,7 +89,7 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
       });
       query.limit = 1;
       var result = await query.find();
-      if(result.isEmpty) throw '未查询到会话!';
+      if(result.isEmpty) throw '对话已结束';
       conversation = result[0];
     }
     return conversation;
@@ -99,6 +99,17 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
     onMessageReceived(message);
   }
   Future<Message> protectedSend(Conversation conversation,Message message,bool transient) => conversation.send(message:message,transient:transient);
+  @override
+  void protectedOnSendError(dynamic error){
+    if(error is RTMException){
+      if(error.message=='CONVERSATION_NOT_FOUND'){
+        onSendError('对话已结束');
+      }
+    }
+    else if(error=='对话已结束'){
+      onSendError(error);
+    }
+  }
   @override
   Future<TMessage> protectedSendMessage(String conversationId,String? msg,String msgType,Map msgExtra) async {
     var conversation = await protectedGetConversation(conversationId);
