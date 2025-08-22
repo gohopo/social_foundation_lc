@@ -2,6 +2,8 @@ import 'social_foundation_lc_platform_interface.dart';
 
 export 'package:leancloud_official_plugin/leancloud_plugin.dart' hide Client,Conversation,Message;
 export 'package:social_foundation/social_foundation.dart';
+//models
+export './models/conversation.dart';
 //viewmodels
 export './view_models/chat_model.dart';
 //services
