@@ -12,4 +12,9 @@ abstract class SfConversationLc<TMessage extends SfMessage> extends SfConversati
     map['attributes'] = jsonEncode(attributes);
     return map;
   }
+  @override
+  void copyWith(covariant SfConversationLc<TMessage> conversation){
+    super.copyWith(conversation);
+    _attributes = conversation._attributes;
+  }
 }
