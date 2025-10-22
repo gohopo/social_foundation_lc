@@ -18,13 +18,14 @@ abstract class SfChatModelLc<TConversation extends SfConversation,TMessage exten
   Future queryUnreadMessages() async {
     if(conversation!.unreadMessagesCount>0){
       List<TMessage> messages = await (SfLocatorManager.chatManager as SfChatManagerLc).queryMessages(conversation!.convId, conversation!.unreadMessagesCount) as List<TMessage>;
+      messages = messages.map((message) => list.firstWhereOrNull((data)=>message.equalTo(data)) ?? message).toList();
       await onUnreadMessages(messages);
       messages = messages.where((message) => list.every((data) => !message.equalTo(data))).toList();
       list.insertAll(0,messages);
       list.sort((a,b) => b.timestamp-a.timestamp);
       notifyListeners();
       
-      await SfMessage.insertAll(messages);
+      await SfMessage.saveAll(messages);
     }
   }
 }
