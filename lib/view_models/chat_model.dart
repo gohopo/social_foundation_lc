@@ -2,7 +2,7 @@ import 'package:social_foundation/social_foundation.dart';
 import 'package:social_foundation_lc/services/chat_manager.dart';
 
 abstract class SfChatModelLc<TConversation extends SfConversation,TMessage extends SfMessage> extends SfChatModel<TConversation,TMessage>{
-  SfChatModelLc(super.args);
+  SfChatModelLc({super.conversation,super.name,super.anonymous});
   @override
   Future listenMessageEvent() async {
     disposeMessageEvent();
