@@ -20,9 +20,9 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
     await conversation.quit();
   }
   @override
-  Future convRead(String conversationId) async {
-    var conversation = await protectedGetConversation(conversationId);
-    return conversation.read();
+  Future convRead(TConversation conversation) async {
+    var lcConversation = await protectedGetConversation(conversation.convId);
+    return lcConversation.read();
   }
   @override
   Future convRecall(String messageID,{String? conversationId,int? timestamp}) async {
@@ -47,7 +47,7 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
   void onUnreadMessagesCountUpdated(TConversation conversation) async {
     if(conversation.unreadMessagesCount<=0) return;
     saveConversation(conversation,unreadMessageCountUpdated:true);
-    convRead(conversation.convId);
+    convRead(conversation);
     SfUnreadMessagesCountUpdatedEvent<TConversation>(conversation:conversation).emit();
   }
   TConversation protectedConvertConversation(Conversation conversation){
@@ -112,14 +112,14 @@ abstract class SfChatManagerLc<TConversation extends SfConversation,TMessage ext
     }
   }
   @override
-  Future<TMessage> protectedSendMessage(String conversationId,String? msg,String msgType,Map msgExtra) async {
-    var conversation = await protectedGetConversation(conversationId);
+  Future<TMessage> protectedSendMessage(TConversation conversation,String? msg,String msgType,Map msgExtra) async {
+    var lcConversation = await protectedGetConversation(conversation.convId);
     var message = json.encode({
       'msg': msg,
       'msgType': msgType,
       'msgExtra': msgExtra
     });
-    var result = await protectedSend(conversation,TextMessage.from(text:message),msgExtra['transient']??false);
+    var result = await protectedSend(lcConversation,TextMessage.from(text:message),msgExtra['transient']??false);
     return protectedConvertMessage(result)!;
   }
   Future<List<TMessage>> queryMessages(String conversationId,int limit) async {
